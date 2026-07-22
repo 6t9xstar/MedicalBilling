@@ -1,0 +1,66 @@
+# =============================================================================
+# Apex Precision Billing — .gitignore
+# =============================================================================
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# Build artifacts
+.next/
+out/
+dist/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment files (NEVER commit secrets)
+/.env
+.env*
+!.env.example
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+logs/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test artifacts
+coverage/
+.nyc_output/
+.vitest-cache/
+
+# Local utilities and one-off scripts (kept out of history; raw sources stay in scripts/ if you want them)
+scripts/.cache/
+*.tmp
+*.bak
+
+# Deploy bundle artifacts (build artifacts inside hostinger-deploy/)
+hostinger-deploy/app/node_modules/
+hostinger-deploy/app/.next/
+hostinger-deploy/app/out/
+hostinger-deploy/*.tar.gz
+
+# Reference / scraped materials (not part of the site)
+img/
+"more content.txt"
+
+# OS-reserved device names (paranoid — shouldn't exist)
+nul
+aux
+con
+prn

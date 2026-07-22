@@ -1,0 +1,17 @@
+{
+  "name": "Apex Precision Billing Inc",
+  "short_name": "Apex Billing",
+  "description": "Premium medical billing, revenue cycle management, and healthcare consulting services.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1b4a",
+  "theme_color": "#0d1b4a",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

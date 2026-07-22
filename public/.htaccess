@@ -1,0 +1,127 @@
+# =============================================================================
+# Apex Precision Billing — Production .htaccess
+# Drop this file in the root of your Hostinger-hosted static export
+# (the directory that holds index.html — typically public_html or the
+# directory you pointed the deployment at).
+#
+# Tested for: Apache 2.4 + mod_headers, LiteSpeed (Apache-compatible)
+# Modes: production (no Next.js dev server is involved).
+# =============================================================================
+
+# Enable URL rewriting
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Rewrite legacy API endpoint so the existing client-side fetch('/api/contact')
+    # resolves to our PHP handler in the static export.
+    RewriteCond %{REQUEST_METHOD} POST
+    RewriteRule ^api/contact/?$ api/contact.php [L,QSA]
+
+    # Strip trailing slash on real files (e.g. /favicon.ico → /favicon.ico)
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} ^(.+)/$
+    RewriteRule ^ %1 [R=301,L]
+
+    # Send everything else to Next.js static export
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ %{DOCUMENT_ROOT}/index.html [L]
+</IfModule>
+
+# Force HTTPS + HSTS (only enable once SSL is confirmed working)
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+</IfModule>
+
+# -----------------------------------------------------------------------------
+# Security headers — applied to every response
+# -----------------------------------------------------------------------------
+<IfModule mod_headers.c>
+
+    # HSTS — 2 years, include subdomains, eligible for preload
+    Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" env=HTTPS
+
+    # Clickjacking — block embedding entirely
+    Header always set X-Frame-Options "DENY"
+    Header always set Frame-Options "DENY"
+
+    # MIME-type sniffing protection
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Referrer — strict-origin-when-cross-origin is the modern default
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Disable powerful features the site doesn't need
+    Header always set Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+
+    # Cross-origin isolation defaults
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+    Header always set Cross-Origin-Resource-Policy "same-origin"
+
+    # Content Security Policy — moderate baseline. Tune after first audit.
+    # Notes:
+    #   * 'unsafe-inline' on script-src is required because Next.js injects
+    #     inline scripts (hydration data). To remove it, host JSON in external
+    #     files and add hashes/nonces.
+    #   * connect-src 'self' is the default; add https://api.web3forms.com
+    #     if you switch the form to Web3Forms.
+    #   * frame-ancestors 'none' replaces X-Frame-Options for modern UAs.
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'"
+
+    # Remove identifying headers
+    Header unset X-Powered-By
+    Header unset Server
+    Header unset X-AspNet-Version
+
+    # Long cache for fingerprinted assets — Next.js uses content-hash filenames
+    <FilesMatch "\.(css|js|woff2|woff|ttf|otf|eot|svg|png|jpg|jpeg|gif|webp|avif|ico|map)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # Short cache for HTML (always revalidate)
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "public, max-age=0, must-revalidate"
+    </FilesMatch>
+
+    # Block access to sensitive files served by misconfiguration
+    <FilesMatch "(^\.|composer\.(json|lock)|package(-lock)?\.json|next\.config\.(js|ts|mjs)|tsconfig\.json|eslint\.config\.(js|mjs)|README\.md|UPGRADE_PLAN\.md|\.env|\.htaccess|\.htpasswd)">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
+# -----------------------------------------------------------------------------
+# Compression — modern site, lots of html/js/css/svg
+# -----------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml application/xml+rss image/svg+xml
+</IfModule>
+
+# Brotli when available (LiteSpeed has it)
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml application/xml+rss image/svg+xml
+</IfModule>
+
+# -----------------------------------------------------------------------------
+# MIME — make sure .webp / .avif are served correctly
+# -----------------------------------------------------------------------------
+<IfModule mod_mime.c>
+    AddType image/webp .webp
+    AddType image/avif .avif
+    AddType font/woff2 .woff2
+    AddType application/manifest+json .webmanifest
+    AddType model/gltf-binary .glb
+    AddType text/javascript .mjs
+</IfModule>
+
+# -----------------------------------------------------------------------------
+# Stop directory browsing
+# -----------------------------------------------------------------------------
+Options -Indexes
+
+# Disable PHP execution in upload dirs that might exist (defense in depth)
+<DirectoryMatch "^.*/uploads/.*">
+    <FilesMatch "\.(php|phtml|php3|php4|php5|phps)$">
+        Require all denied
+    </FilesMatch>
+</DirectoryMatch>
