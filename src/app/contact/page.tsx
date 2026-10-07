@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { media } from "@/lib/media";
 import { m } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,6 +33,7 @@ import Footer from "@/components/layout/Footer";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import CtaLink from "@/components/ui/CtaLink";
 import DotPattern from "@/components/ui/DotPattern";
+import GoogleMap from "@/components/ui/GoogleMap";
 import { SITE, departmentEmails, type DepartmentEmail } from "@/lib/constants";
 import { fadeInUpClean, staggerContainer, sectionCardVariants, sectionCardsContainerVariants } from "@/lib/animations";
 
@@ -190,7 +192,7 @@ export default function ContactPage() {
                 <div className="relative w-full max-w-xl overflow-hidden rounded-4xl border border-white/70 bg-white/80 shadow-2xl shadow-primary/10 backdrop-blur-sm">
                   <div className="relative aspect-square sm:aspect-[1.08/1]">
                     <Image
-                      src="/images/contact-office.jpeg"
+                      src={media("/images/contact-office.jpeg")}
                       alt="Apex Precision Billing team member welcoming a client in the office"
                       fill
                       priority
@@ -281,18 +283,21 @@ export default function ContactPage() {
                       label: "Email",
                       value: SITE.email,
                       href: `mailto:${SITE.email}`,
+                      external: false,
                     },
                     {
                       icon: Phone,
                       label: "Phone",
                       value: SITE.phone,
                       href: `tel:${SITE.phoneRaw}`,
+                      external: false,
                     },
                     {
                       icon: MapPin,
-                      label: "Location",
-                      value:
-                        "Serving physician practices across the United States",
+                      label: "Office Address",
+                      value: SITE.address,
+                      href: SITE.mapsUrl,
+                      external: true,
                     },
                   ].map((item) => (
                     <div key={item.label} className="flex items-start gap-4">
@@ -306,6 +311,9 @@ export default function ContactPage() {
                         {item.href ? (
                           <a
                             href={item.href}
+                            {...(item.external
+                              ? { target: "_blank", rel: "noopener noreferrer" }
+                              : {})}
                             className="font-body text-sm text-muted hover:text-primary transition-colors"
                           >
                             {item.value}
@@ -552,6 +560,118 @@ export default function ContactPage() {
                     </form>
                   )}
                 </div>
+              </m.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Office location + Google Map */}
+        <section
+          className="section-generous bg-background overflow-hidden"
+          aria-labelledby="office-location-heading"
+        >
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <m.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              variants={staggerContainer}
+              className="max-w-2xl"
+            >
+              <m.span
+                variants={fadeInUpClean}
+                className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-primary mb-3"
+              >
+                <MapPin className="h-3.5 w-3.5" />
+                Visit our office
+              </m.span>
+              <m.h2
+                id="office-location-heading"
+                variants={fadeInUpClean}
+                className="font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+              >
+                Located in{" "}
+                <span className="gradient-text">
+                  {SITE.addressParts.city}, {SITE.addressParts.stateName}
+                </span>
+              </m.h2>
+              <m.div
+                variants={fadeInUpClean}
+                className="accent-line mt-4 origin-left"
+              />
+              <m.p
+                variants={fadeInUpClean}
+                className="mt-4 font-body text-base text-muted sm:text-lg"
+              >
+                Meet the team behind your claims. Our office supports physician
+                practices across the United States from Colonia, NJ.
+              </m.p>
+            </m.div>
+
+            <div className="mt-10 grid gap-6 lg:grid-cols-5">
+              <m.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-80px" }}
+                variants={staggerContainer}
+                className="lg:col-span-2"
+              >
+                <m.div
+                  variants={fadeInUpClean}
+                  className="flex h-full flex-col rounded-3xl border border-border bg-white p-6 shadow-sm sm:p-8"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/5">
+                    <MapPin className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="mt-5 font-heading text-xl font-bold text-foreground">
+                    {SITE.name}
+                  </h3>
+                  <address className="mt-3 space-y-1 font-body text-sm not-italic text-muted">
+                    <p className="font-medium text-foreground">
+                      {SITE.addressParts.street}
+                    </p>
+                    <p>
+                      {SITE.addressParts.city}, {SITE.addressParts.state}{" "}
+                      {SITE.addressParts.zip}
+                    </p>
+                  </address>
+                  <a
+                    href={`tel:${SITE.phoneRaw}`}
+                    className="mt-4 inline-flex items-center gap-2 font-body text-sm text-muted transition-colors hover:text-primary"
+                  >
+                    <Phone className="h-4 w-4 text-primary" />
+                    {SITE.phone}
+                  </a>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <a
+                      href={SITE.mapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-primary to-accent px-5 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:shadow-lg hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    >
+                      Get Directions
+                      <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    </a>
+                    <CtaLink href="/schedule-consultation" variant="outline">
+                      Schedule a visit
+                    </CtaLink>
+                  </div>
+                  <div className="mt-auto border-t border-border pt-6">
+                    <p className="font-body text-xs text-muted">
+                      Serving physician practices across the United States.
+                    </p>
+                  </div>
+                </m.div>
+              </m.div>
+
+              <m.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-80px" }}
+                variants={fadeInUpClean}
+                className="lg:col-span-3"
+              >
+                <GoogleMap />
               </m.div>
             </div>
           </div>

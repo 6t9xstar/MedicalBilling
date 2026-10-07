@@ -52,6 +52,11 @@
     # Referrer — strict-origin-when-cross-origin is the modern default
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
 
+    # Early font preloads — sent with the HTML response so the critical
+    # weights start downloading before the browser has even parsed <head>.
+    # (jsDelivr primary; unpkg fallback lives in the @font-face src chain.)
+    Header always set Link '<https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.3.0/files/poppins-latin-800-normal.woff2>; rel=preload; as=font; crossorigin, <https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.3.0/files/poppins-latin-600-normal.woff2>; rel=preload; as=font; crossorigin, <https://cdn.jsdelivr.net/npm/@fontsource/inter@5.2.6/files/inter-latin-400-normal.woff2>; rel=preload; as=font; crossorigin'
+
     # Disable powerful features the site doesn't need
     Header always set Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
 
@@ -67,7 +72,7 @@
     #   * connect-src 'self' is the default; add https://api.web3forms.com
     #     if you switch the form to Web3Forms.
     #   * frame-ancestors 'none' replaces X-Frame-Options for modern UAs.
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' https://cdn.jsdelivr.net https://unpkg.com data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'"
 
     # Remove identifying headers
     Header unset X-Powered-By

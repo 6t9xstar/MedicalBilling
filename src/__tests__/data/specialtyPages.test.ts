@@ -30,7 +30,7 @@ describe("specialtyPages data", () => {
 
   it("can resolve specialties by slug and by alias/name", () => {
     expect(getSpecialtyPageBySlug("family-medicine-billing")?.name).toBe("Family Medicine");
-    expect(getSpecialtyPageByName("Behavioral Health")?.slug).toBe("mental-health-billing");
+    expect(getSpecialtyPageByName("Behavioral Health")?.slug).toBe("behavioral-health-billing");
     expect(getSpecialtyPageByName("Orthopedic Surgery")?.slug).toBe("orthopedic-billing");
   });
 

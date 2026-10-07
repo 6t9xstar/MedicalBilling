@@ -1287,10 +1287,12 @@ export function getSpecialtyPageByName(
   name: string,
 ): SpecialtyPage | undefined {
   const loweredName = name.toLowerCase();
-  return specialtyPages.find(
-    (page) =>
-      page.name.toLowerCase() === loweredName ||
-      page.aliases?.some((alias) => alias.toLowerCase() === loweredName),
+  const exactMatch = specialtyPages.find(
+    (page) => page.name.toLowerCase() === loweredName,
+  );
+  if (exactMatch) return exactMatch;
+  return specialtyPages.find((page) =>
+    page.aliases?.some((alias) => alias.toLowerCase() === loweredName),
   );
 }
 

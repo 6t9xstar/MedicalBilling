@@ -5,6 +5,11 @@ import {
   Menu, X, ChevronDown, ChevronRight, Mail, MapPin, Clock,
   Headphones, Users, Activity, Award, Target, Heart, Zap, Star,
   Cpu, BarChart3, ArrowUpRight, ArrowUp, AlertTriangle, RefreshCw,
+  Syringe, Bug, Moon, AudioLines, PersonStanding, Sparkles, Smile,
+  Scan, Siren, Gauge, Apple, Scissors, Home, HeartHandshake, Droplet,
+  Brain, Radiation, Flower2, Ribbon, Eye, Bone, Ear, Microscope,
+  Baby, Dumbbell, Feather, Footprints, MessageCircle, Wind, Camera,
+  Hand, Flame, Waves, Video, Droplets,
 } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 
@@ -17,6 +22,11 @@ export const iconRegistry: Record<string, IconComponent> = {
   Menu, X, ChevronDown, ChevronRight, Mail, MapPin, Clock,
   Headphones, Users, Activity, Award, Target, Heart, Zap, Star,
   Cpu, BarChart3, ArrowUpRight, ArrowUp, AlertTriangle, RefreshCw,
+  Syringe, Bug, Moon, AudioLines, PersonStanding, Sparkles, Smile,
+  Scan, Siren, Gauge, Apple, Scissors, Home, HeartHandshake, Droplet,
+  Brain, Radiation, Flower2, Ribbon, Eye, Bone, Ear, Microscope,
+  Baby, Dumbbell, Feather, Footprints, MessageCircle, Wind, Camera,
+  Hand, Flame, Waves, Video, Droplets,
 };
 
 export function getIcon(name: string): IconComponent {

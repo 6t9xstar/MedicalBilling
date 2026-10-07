@@ -1,6 +1,7 @@
 export interface Specialty {
   name: string;
   slug: string;
+  icon: string;
 }
 
 export interface SpecialtyGroup {
@@ -15,130 +16,130 @@ function slugify(name: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
-function createSpecialty(name: string): Specialty {
-  return { name, slug: slugify(name) };
+function createSpecialty(name: string, icon: string): Specialty {
+  return { name, slug: slugify(name), icon };
 }
 
 export const specialties: SpecialtyGroup[] = [
   {
     letter: "A",
     specialties: [
-      createSpecialty("Acupuncture"),
-      createSpecialty("Allergy Immunology"),
-      createSpecialty("Anesthesia"),
-      createSpecialty("Audiology"),
+      createSpecialty("Acupuncture", "Syringe"),
+      createSpecialty("Allergy Immunology", "Bug"),
+      createSpecialty("Anesthesia", "Moon"),
+      createSpecialty("Audiology", "AudioLines"),
     ],
   },
   {
     letter: "B",
-    specialties: [createSpecialty("Behavioral Health")],
+    specialties: [createSpecialty("Behavioral Health", "Users")],
   },
   {
     letter: "C",
     specialties: [
-      createSpecialty("Cardiology"),
-      createSpecialty("Chiropractic"),
-      createSpecialty("Cosmetic Surgery"),
+      createSpecialty("Cardiology", "HeartPulse"),
+      createSpecialty("Chiropractic", "PersonStanding"),
+      createSpecialty("Cosmetic Surgery", "Sparkles"),
     ],
   },
   {
     letter: "D",
     specialties: [
-      createSpecialty("Dentistry"),
-      createSpecialty("Dermatology"),
-      createSpecialty("Diagnostic Imaging"),
+      createSpecialty("Dentistry", "Smile"),
+      createSpecialty("Dermatology", "Scan"),
+      createSpecialty("Diagnostic Imaging", "Monitor"),
     ],
   },
   {
     letter: "E",
     specialties: [
-      createSpecialty("Emergency Medicine"),
-      createSpecialty("Endocrinology"),
+      createSpecialty("Emergency Medicine", "Siren"),
+      createSpecialty("Endocrinology", "Gauge"),
     ],
   },
   {
     letter: "F",
-    specialties: [createSpecialty("Family Medicine")],
+    specialties: [createSpecialty("Family Medicine", "Stethoscope")],
   },
   {
     letter: "G",
     specialties: [
-      createSpecialty("Gastroenterology"),
-      createSpecialty("General Surgery"),
+      createSpecialty("Gastroenterology", "Apple"),
+      createSpecialty("General Surgery", "Scissors"),
     ],
   },
   {
     letter: "H",
-    specialties: [createSpecialty("Home Health")],
+    specialties: [createSpecialty("Home Health", "Home")],
   },
   {
     letter: "I",
-    specialties: [createSpecialty("Internal Medicine")],
+    specialties: [createSpecialty("Internal Medicine", "Activity")],
   },
   {
     letter: "M",
-    specialties: [createSpecialty("Mental Health")],
+    specialties: [createSpecialty("Mental Health", "HeartHandshake")],
   },
   {
     letter: "N",
     specialties: [
-      createSpecialty("Nephrology"),
-      createSpecialty("Neurology"),
-      createSpecialty("Nuclear Medicine"),
+      createSpecialty("Nephrology", "Droplet"),
+      createSpecialty("Neurology", "Brain"),
+      createSpecialty("Nuclear Medicine", "Radiation"),
     ],
   },
   {
     letter: "O",
     specialties: [
-      createSpecialty("Obstetrics & Gynecology"),
-      createSpecialty("Oncology"),
-      createSpecialty("Ophthalmology"),
-      createSpecialty("Orthopedic Surgery"),
-      createSpecialty("Otolaryngology"),
+      createSpecialty("Obstetrics & Gynecology", "Flower2"),
+      createSpecialty("Oncology", "Ribbon"),
+      createSpecialty("Ophthalmology", "Eye"),
+      createSpecialty("Orthopedic Surgery", "Bone"),
+      createSpecialty("Otolaryngology", "Ear"),
     ],
   },
   {
     letter: "P",
     specialties: [
-      createSpecialty("Pain Management"),
-      createSpecialty("Pathology"),
-      createSpecialty("Pediatrics"),
-      createSpecialty("Physical Medicine & Rehab"),
-      createSpecialty("Plastic Surgery"),
-      createSpecialty("Podiatry"),
-      createSpecialty("Psychiatry"),
-      createSpecialty("Pulmonology"),
+      createSpecialty("Pain Management", "Zap"),
+      createSpecialty("Pathology", "Microscope"),
+      createSpecialty("Pediatrics", "Baby"),
+      createSpecialty("Physical Medicine & Rehab", "Dumbbell"),
+      createSpecialty("Plastic Surgery", "Feather"),
+      createSpecialty("Podiatry", "Footprints"),
+      createSpecialty("Psychiatry", "MessageCircle"),
+      createSpecialty("Pulmonology", "Wind"),
     ],
   },
   {
     letter: "R",
     specialties: [
-      createSpecialty("Radiology"),
-      createSpecialty("Rheumatology"),
+      createSpecialty("Radiology", "Camera"),
+      createSpecialty("Rheumatology", "Hand"),
     ],
   },
   {
     letter: "S",
     specialties: [
-      createSpecialty("Sleep Medicine"),
-      createSpecialty("Speech Therapy"),
-      createSpecialty("Sports Medicine"),
+      createSpecialty("Sleep Medicine", "Moon"),
+      createSpecialty("Speech Therapy", "Waves"),
+      createSpecialty("Sports Medicine", "Flame"),
     ],
   },
   {
     letter: "T",
-    specialties: [createSpecialty("Telehealth")],
+    specialties: [createSpecialty("Telehealth", "Video")],
   },
   {
     letter: "U",
     specialties: [
-      createSpecialty("Urgent Care"),
-      createSpecialty("Urology"),
+      createSpecialty("Urgent Care", "Clock"),
+      createSpecialty("Urology", "Droplets"),
     ],
   },
   {
     letter: "V",
-    specialties: [createSpecialty("Vascular Surgery")],
+    specialties: [createSpecialty("Vascular Surgery", "Heart")],
   },
 ];
 

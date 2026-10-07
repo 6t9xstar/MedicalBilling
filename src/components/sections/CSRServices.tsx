@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { media } from "@/lib/media";
 import Link from "next/link";
 import Image from "next/image";
 import { m, useInView } from "framer-motion";
@@ -88,7 +89,7 @@ export default function CSRServices() {
             >
               <div className="relative flex h-full min-h-80 flex-col bg-linear-to-br from-secondary to-primary p-8 md:p-10">
                 <Image
-                  src="/images/aprecisionbillinginc.jpg"
+                  src={media("/images/aprecisionbillinginc.webp")}
                   alt="Apex Precision Billing team providing medical billing services"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"

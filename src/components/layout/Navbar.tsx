@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { media } from "@/lib/media";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -109,7 +110,7 @@ export default function Navbar() {
               className="relative shrink-0 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             >
               <Image
-                src="/images/navbar-logo.png"
+                src={media("/images/navbar-logo.png")}
                 alt="Apex Precision Billing Inc"
                 width={260}
                 height={44}

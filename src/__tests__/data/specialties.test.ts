@@ -1,14 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { specialties, getAllSpecialties, getAllSpecialtyLetters } from "@/data/specialties";
+import { getSpecialtyPageByName } from "@/data/specialtyPages";
+import { iconRegistry } from "@/lib/icons";
 
 describe("specialties data", () => {
-  it("has 14 letter groups", () => {
-    expect(specialties).toHaveLength(14);
+  it("has 18 letter groups", () => {
+    expect(specialties).toHaveLength(18);
   });
 
-  it("has 40 total specialties", () => {
+  it("has 44 total specialties", () => {
     const all = getAllSpecialties();
-    expect(all).toHaveLength(40);
+    expect(all).toHaveLength(44);
   });
 
   it("all specialties have slugified slugs", () => {
@@ -18,9 +20,24 @@ describe("specialties data", () => {
     }
   });
 
-  it("getAllSpecialtyLetters returns all 14 letters", () => {
+  it("every specialty has a dedicated billing page", () => {
+    const all = getAllSpecialties();
+    for (const s of all) {
+      expect(getSpecialtyPageByName(s.name), `missing page for ${s.name}`).toBeTruthy();
+    }
+  });
+
+  it("every specialty has a registered icon", () => {
+    const all = getAllSpecialties();
+    for (const s of all) {
+      expect(s.icon, `missing icon for ${s.name}`).toBeTruthy();
+      expect(iconRegistry[s.icon], `unregistered icon "${s.icon}" for ${s.name}`).toBeTruthy();
+    }
+  });
+
+  it("getAllSpecialtyLetters returns all 18 letters", () => {
     const letters = getAllSpecialtyLetters();
-    expect(letters).toHaveLength(14);
+    expect(letters).toHaveLength(18);
     expect(letters).toContain("A");
     expect(letters).toContain("V");
   });

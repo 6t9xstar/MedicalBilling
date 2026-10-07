@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { media } from "@/lib/media";
 import Link from "next/link";
 import Image from "next/image";
 import { m, useInView } from "framer-motion";
@@ -54,7 +55,7 @@ export default function ServicesPage() {
         <section className="relative flex min-h-[55dvh] items-center overflow-hidden">
           <div className="absolute inset-0">
             <Image
-              src="/images/billing-hero.webp"
+              src={media("/images/billing-hero.webp")}
               alt=""
               fill
               className="object-cover"
@@ -62,7 +63,7 @@ export default function ServicesPage() {
               priority
               aria-hidden="true"
             />
-            <div className="absolute inset-0 bg-linear-to-r from-primary-dark/95 via-primary/85 to-primary/70" />
+            <div className="absolute inset-0 bg-linear-to-r from-primary-dark/45 via-primary/40 to-primary/35" />
           </div>
           <div className="absolute -top-32 right-1/4 h-80 w-80 rounded-full bg-white/4 blur-[100px]" />
           <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-20 w-full">
@@ -74,7 +75,7 @@ export default function ServicesPage() {
               <Breadcrumbs
                 items={[{ label: "Home", href: "/" }, { label: "Services" }]}
               />
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-4xl">
+              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-4xl [text-shadow:0_2px_14px_rgba(8,48,111,0.5)]">
                 Core billing and revenue cycle services for practices that need{" "}
                 <span className="text-accent">clearer workflows</span>
               </h1>

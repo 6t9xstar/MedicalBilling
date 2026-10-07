@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { media } from "@/lib/media";
 import { m, useInView } from "framer-motion";
 import Image from "next/image";
 import CtaLink from "@/components/ui/CtaLink";
@@ -86,7 +87,7 @@ export default function AboutPage() {
         >
           <div className="absolute inset-0">
             <Image
-              src="/images/hero-bg.webp"
+              src={media("/images/hero-bg.webp")}
               alt=""
               fill
               className="object-cover"
@@ -94,7 +95,7 @@ export default function AboutPage() {
               priority
               aria-hidden="true"
             />
-            <div className="absolute inset-0 bg-linear-to-r from-primary-dark/95 via-primary/85 to-accent/70" />
+            <div className="absolute inset-0 bg-linear-to-r from-primary-dark/45 via-primary/40 to-accent/35" />
           </div>
           <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-primary/8 blur-[120px]" />
           <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-20 w-full">
@@ -106,7 +107,7 @@ export default function AboutPage() {
               <Breadcrumbs
                 items={[{ label: "Home", href: "/" }, { label: "About Us" }]}
               />
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
+              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl [text-shadow:0_2px_14px_rgba(8,48,111,0.5)]">
                 About{" "}
                 <span className="text-accent">Apex Precision Billing</span>
               </h1>
@@ -174,7 +175,7 @@ export default function AboutPage() {
               >
                 <div className="relative overflow-hidden rounded-2xl shadow-xl shadow-black/5">
                   <Image
-                    src="/images/who-we-are.webp"
+                    src={media("/images/who-we-are.webp")}
                     alt="Apex Precision Billing website and operations direction"
                     width={720}
                     height={480}

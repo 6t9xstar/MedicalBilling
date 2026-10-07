@@ -1,5 +1,110 @@
 @import "tailwindcss";
 
+/*
+ * Fonts served from CDN (version-pinned Fontsource packages).
+ * jsDelivr is the primary source; unpkg acts as automatic fallback
+ * if jsDelivr is unreachable. Bundles nothing into the JS payload.
+ */
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.3.0/files/poppins-latin-500-normal.woff2") format("woff2"),
+    url("https://unpkg.com/@fontsource/poppins@5.3.0/files/poppins-latin-500-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.3.0/files/poppins-latin-600-normal.woff2") format("woff2"),
+    url("https://unpkg.com/@fontsource/poppins@5.3.0/files/poppins-latin-600-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.3.0/files/poppins-latin-700-normal.woff2") format("woff2"),
+    url("https://unpkg.com/@fontsource/poppins@5.3.0/files/poppins-latin-700-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.3.0/files/poppins-latin-800-normal.woff2") format("woff2"),
+    url("https://unpkg.com/@fontsource/poppins@5.3.0/files/poppins-latin-800-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@fontsource/inter@5.2.6/files/inter-latin-300-normal.woff2") format("woff2"),
+    url("https://unpkg.com/@fontsource/inter@5.2.6/files/inter-latin-300-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@fontsource/inter@5.2.6/files/inter-latin-400-normal.woff2") format("woff2"),
+    url("https://unpkg.com/@fontsource/inter@5.2.6/files/inter-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@fontsource/inter@5.2.6/files/inter-latin-500-normal.woff2") format("woff2"),
+    url("https://unpkg.com/@fontsource/inter@5.2.6/files/inter-latin-500-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/@fontsource/inter@5.2.6/files/inter-latin-600-normal.woff2") format("woff2"),
+    url("https://unpkg.com/@fontsource/inter@5.2.6/files/inter-latin-600-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Metric-optimized Arial fallbacks — keeps layout stable while CDN fonts swap in */
+@font-face {
+  font-family: "Poppins Fallback";
+  src: local("Arial");
+  ascent-override: 93.62%;
+  descent-override: 31.21%;
+  line-gap-override: 8.92%;
+  size-adjust: 112.16%;
+}
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  ascent-override: 90.44%;
+  descent-override: 22.52%;
+  line-gap-override: 0%;
+  size-adjust: 107.12%;
+}
+
 :root {
   --background: #f7fbff;
   --background-subtle: #eef6ff;
@@ -34,8 +139,8 @@
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-ring: var(--ring);
-  --font-heading: "Poppins", sans-serif;
-  --font-body: "Inter", sans-serif;
+  --font-heading: "Poppins", "Poppins Fallback", sans-serif;
+  --font-body: "Inter", "Inter Fallback", sans-serif;
 }
 
 * { box-sizing: border-box; }

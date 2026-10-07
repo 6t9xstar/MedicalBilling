@@ -60,7 +60,7 @@ const content = {
   ],
   "contact-us": [
     `If you have questions about this Privacy Policy, please contact us at ${SITE.email} or ${SITE.phone}.`,
-    `Business mailing address: ${SITE.address}`,
+    `Office address: ${SITE.address}`,
   ],
 };
 

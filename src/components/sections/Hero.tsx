@@ -1,16 +1,19 @@
 "use client";
 
 import { useRef } from "react";
+import { media } from "@/lib/media";
 import Link from "next/link";
 import Image from "next/image";
 import { m, useInView } from "framer-motion";
 import { ArrowRight, CirclePlay, ShieldCheck } from "lucide-react";
 import { fadeInUpClean, staggerContainer } from "@/lib/animations";
 import CtaLink from "@/components/ui/CtaLink";
+import { services } from "@/data/services";
+import { specialtyPages } from "@/data/specialtyPages";
 
 const proofPoints = [
-  { value: "22", label: "core service pages" },
-  { value: "52", label: "specialty landing pages" },
+  { value: String(services.length), label: "core service pages" },
+  { value: String(specialtyPages.length), label: "specialty landing pages" },
   { value: "8", label: "resource sections" },
   { value: "4", label: "conversion paths" },
 ];
@@ -131,7 +134,7 @@ export default function Hero() {
             aria-hidden="true"
           />
           <Image
-            src="/images/doctoriPadGuy.webp"
+            src={media("/images/doctoriPadGuy.webp")}
             alt="Healthcare professional reviewing billing or practice workflow information"
             width={800}
             height={1089}

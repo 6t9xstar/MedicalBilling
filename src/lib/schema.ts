@@ -168,6 +168,14 @@ export function buildOrganizationSchema() {
     email: SITE.email,
     telephone: SITE.phoneRaw,
     slogan: SITE.tagline,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: SITE.addressParts.street,
+      addressLocality: SITE.addressParts.city,
+      addressRegion: SITE.addressParts.state,
+      postalCode: SITE.addressParts.zip,
+      addressCountry: "US",
+    },
     sameAs: [
       SITE.social.linkedin,
       SITE.social.instagram,
@@ -195,9 +203,18 @@ export function buildLocalBusinessSchema() {
     },
     address: {
       "@type": "PostalAddress",
-      streetAddress: SITE.address,
+      streetAddress: SITE.addressParts.street,
+      addressLocality: SITE.addressParts.city,
+      addressRegion: SITE.addressParts.state,
+      postalCode: SITE.addressParts.zip,
       addressCountry: "US",
     },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: SITE.geo.lat,
+      longitude: SITE.geo.lng,
+    },
+    hasMap: SITE.mapsUrl,
   };
 }
 

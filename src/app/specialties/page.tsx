@@ -1,23 +1,21 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { media } from "@/lib/media";
 import Link from "next/link";
 import { m } from "framer-motion";
 import Image from "next/image";
-import {
-  ArrowRight,
-  Stethoscope,
-  Search,
-  Sparkles,
-  ChevronRight,
-} from "lucide-react";
+import { ArrowRight, Search, Sparkles, Stethoscope, ChevronDown } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import CtaLink from "@/components/ui/CtaLink";
 import JsonLd from "@/components/ui/JsonLd";
+import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { specialties } from "@/data/specialties";
-import { getSpecialtyPageByName, specialtyPages } from "@/data/specialtyPages";
+import { specialtyPages, getSpecialtyPageByName } from "@/data/specialtyPages";
+import { services } from "@/data/services";
+import { getIcon } from "@/lib/icons";
 import {
   buildBreadcrumbList,
   buildCollectionPageSchema,
@@ -28,37 +26,24 @@ import {
   staggerContainer,
   staggerContainerFast,
   scaleInLight,
+  usePrefersReducedMotion,
 } from "@/lib/animations";
 
 export default function SpecialtiesPage() {
   const [query, setQuery] = useState("");
-  const [expanded, setExpanded] = useState<string[]>([]);
-
-  const toggleGroup = (letter: string) => {
-    setExpanded((prev) =>
-      prev.includes(letter)
-        ? prev.filter((l) => l !== letter)
-        : [...prev, letter],
-    );
-  };
-
-  const filtered = useMemo(() => {
-    if (!query.trim()) return specialties;
-    const q = query.toLowerCase();
-    return specialties
-      .map((group) => ({
-        ...group,
-        specialties: group.specialties.filter((s) =>
-          s.name.toLowerCase().includes(q),
-        ),
-      }))
-      .filter((g) => g.specialties.length > 0);
-  }, [query]);
+  const reducedMotion = usePrefersReducedMotion();
 
   const totalSpecialties = useMemo(
     () => specialties.reduce((acc, g) => acc + g.specialties.length, 0),
     [],
   );
+
+  const filteredSpecialties = useMemo(() => {
+    const all = specialties.flatMap((g) => g.specialties);
+    if (!query.trim()) return all;
+    const q = query.toLowerCase();
+    return all.filter((s) => s.name.toLowerCase().includes(q));
+  }, [query]);
 
   const schema = [
     buildBreadcrumbList([{ name: "Home", path: "/" }, { name: "Specialties" }]),
@@ -69,7 +54,7 @@ export default function SpecialtiesPage() {
       path: "/specialties",
     }),
     buildItemList({
-      name: "Featured specialty billing pages",
+      name: "Specialty billing pages",
       items: specialtyPages.map((page) => ({
         name: page.title,
         path: `/specialties/${page.slug}`,
@@ -84,10 +69,10 @@ export default function SpecialtiesPage() {
       <main id="main-content" tabIndex={-1}>
         <JsonLd data={schema} />
         {/* Hero */}
-        <section className="relative flex min-h-[50dvh] items-center overflow-hidden">
+        <section className="relative flex min-h-[56dvh] items-center overflow-hidden">
           <div className="absolute inset-0">
             <Image
-              src="/images/claim.webp"
+              src={media("/images/claim.webp")}
               alt=""
               fill
               className="object-cover"
@@ -95,219 +80,284 @@ export default function SpecialtiesPage() {
               priority
               aria-hidden="true"
             />
-            <div className="absolute inset-0 bg-linear-to-r from-primary-dark/95 via-primary/85 to-primary/70" />
+            <div className="absolute inset-0 bg-linear-to-r from-primary-dark/45 via-primary/40 to-primary/35" />
+            <div
+              aria-hidden="true"
+              className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-white/6 blur-3xl"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute -bottom-32 left-10 h-64 w-64 rounded-full bg-accent/10 blur-3xl"
+            />
           </div>
-          <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-20 w-full">
-            <m.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
-            >
-              <Breadcrumbs
-                items={[{ label: "Home", href: "/" }, { label: "Specialties" }]}
-              />
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white max-w-3xl">
-                Specialty billing pages for{" "}
-                <span className="text-accent">{totalSpecialties}+ practice types</span>
-              </h1>
-              <p className="font-body text-lg text-white/80 max-w-2xl mt-4">
-                Apex now includes featured specialty landing pages so physicians
-                and practice leaders can review billing support in a more
-                relevant clinical and operational context.
-              </p>
-            </m.div>
-            <m.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] as const }}
-              className="mt-8 grid grid-cols-3 gap-4 max-w-2xl"
-            >
-              <div className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-3 text-center">
-                <p className="font-heading text-2xl font-bold text-white">{totalSpecialties}</p>
-                <p className="font-body text-xs text-white/70">Specialties</p>
-              </div>
-              <div className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-3 text-center">
-                <p className="font-heading text-2xl font-bold text-white">22</p>
-                <p className="font-body text-xs text-white/70">Services</p>
-              </div>
-              <div className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-3 text-center">
-                <p className="font-heading text-2xl font-bold text-white">52</p>
-                <p className="font-body text-xs text-white/70">Billing Pages</p>
-              </div>
-            </m.div>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 h-24 bg-linear-to-t from-background to-transparent" />
-        </section>
-
-        {/* Search + Specialties */}
-        <section className="section-standard bg-background overflow-hidden">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
             <m.div
               initial="hidden"
               animate="visible"
+              variants={staggerContainer}
+            >
+              <m.div variants={fadeInUpClean}>
+                <Breadcrumbs
+                  items={[
+                    { label: "Home", href: "/" },
+                    { label: "Specialties" },
+                  ]}
+                />
+              </m.div>
+
+              <m.span
+                variants={fadeInUpClean}
+                className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 font-body text-xs font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur-sm"
+              >
+                <Stethoscope className="h-3.5 w-3.5" aria-hidden="true" />
+                Medical Billing by Specialty
+              </m.span>
+
+              <m.h1
+                variants={fadeInUpClean}
+                className="mt-5 max-w-3xl font-heading text-4xl font-extrabold leading-[1.06] tracking-tight text-white [text-shadow:0_2px_14px_rgba(8,48,111,0.5)] sm:text-5xl lg:text-6xl"
+              >
+                Specialty billing pages for{" "}
+                <span className="text-accent">
+                  {totalSpecialties} practice types
+                </span>
+              </m.h1>
+
+              <m.div
+                variants={fadeInUpClean}
+                className="mt-5 h-1 w-20 rounded-full bg-linear-to-r from-accent to-accent-light/50"
+                aria-hidden="true"
+              />
+
+              <m.p
+                variants={fadeInUpClean}
+                className="mt-5 max-w-2xl font-body text-base leading-relaxed text-white/80 sm:text-lg"
+              >
+                Browse {totalSpecialties} dedicated specialty billing pages —
+                each built so physicians and practice leaders can review
+                billing support in a more relevant clinical and operational
+                context.
+              </m.p>
+
+              <m.div
+                variants={fadeInUpClean}
+                className="mt-7 flex flex-wrap gap-4"
+              >
+                <a
+                  href="#directory"
+                  className="group inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-primary-dark shadow-lg transition-all duration-300 hover:shadow-xl hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  Browse specialties
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </a>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-xl border-2 border-white/70 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white hover:text-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  Talk to an expert
+                </Link>
+              </m.div>
+
+              <m.div
+                variants={fadeInUpClean}
+                className="mt-8 grid max-w-lg grid-cols-2 gap-4"
+              >
+                <div className="rounded-2xl border border-white/20 bg-white/10 px-5 py-4 text-center backdrop-blur-sm">
+                  <p className="font-heading text-3xl font-extrabold text-white">
+                    <AnimatedCounter target={totalSpecialties} />
+                  </p>
+                  <p className="mt-1 font-body text-[11px] font-semibold uppercase tracking-wider text-white/70">
+                    Specialties
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-white/20 bg-white/10 px-5 py-4 text-center backdrop-blur-sm">
+                  <p className="font-heading text-3xl font-extrabold text-white">
+                    <AnimatedCounter target={services.length} />
+                  </p>
+                  <p className="mt-1 font-body text-[11px] font-semibold uppercase tracking-wider text-white/70">
+                    Services
+                  </p>
+                </div>
+              </m.div>
+            </m.div>
+          </div>
+
+          {/* Scroll cue */}
+          <m.a
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.6 }}
+            href="#directory"
+            aria-label="Browse the specialty directory"
+            className="absolute bottom-5 right-8 z-10 hidden flex-col items-center gap-1.5 text-white/60 transition-colors hover:text-white lg:flex"
+          >
+            <span className="font-body text-[10px] font-semibold uppercase tracking-[0.22em]">
+              Browse directory
+            </span>
+            <m.span
+              animate={reducedMotion ? { y: 0 } : { y: [0, 6, 0] }}
+              transition={
+                reducedMotion
+                  ? { duration: 0 }
+                  : { duration: 1.6, repeat: Infinity, ease: "easeInOut" }
+              }
+            >
+              <ChevronDown className="h-4 w-4" aria-hidden="true" />
+            </m.span>
+          </m.a>
+
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-linear-to-t from-background to-transparent" />
+        </section>
+
+        {/* Specialty-Focused Billing Services */}
+        <section
+          id="directory"
+          className="section-generous overflow-hidden bg-background"
+        >
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <m.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
               variants={staggerContainerFast}
-              className="mb-6"
+              className="mx-auto max-w-3xl text-center"
+            >
+              <m.h2
+                variants={fadeInUpClean}
+                className="font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl"
+              >
+                <span className="gradient-text">Specialty-Focused</span>{" "}
+                Billing Services
+              </m.h2>
+              <m.div
+                variants={fadeInUpClean}
+                className="accent-line mx-auto mt-5"
+              />
+              <m.p
+                variants={fadeInUpClean}
+                className="mt-5 font-body text-base text-muted sm:text-lg"
+              >
+                We offer billing services across {totalSpecialties} specialties
+                to maximize practice revenues.
+              </m.p>
+            </m.div>
+
+            {/* Search */}
+            <m.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              variants={staggerContainerFast}
+              className="mx-auto mt-9 max-w-xl"
             >
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted pointer-events-none" />
+                <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted" />
                 <input
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder={`Search ${totalSpecialties} specialties...`}
-                  className="w-full rounded-2xl border border-border bg-white py-4 pl-12 pr-4 font-body text-base text-foreground placeholder:text-muted/60 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 shadow-sm"
+                  className="w-full rounded-2xl border border-border bg-white py-4 pl-12 pr-16 font-body text-base text-foreground shadow-sm transition-all duration-300 placeholder:text-muted/60 focus:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary/30"
                   aria-label="Search medical specialties"
                 />
                 {query && (
                   <button
+                    type="button"
                     onClick={() => setQuery("")}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-medium text-primary hover:text-accent transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-medium text-primary transition-colors hover:text-accent"
                     aria-label="Clear search"
                   >
                     Clear
                   </button>
                 )}
               </div>
-              {query && (
-                <m.p
-                  variants={fadeInUpClean}
-                  className="mt-3 font-body text-sm text-muted"
-                >
-                  {filtered.reduce((acc, g) => acc + g.specialties.length, 0)}{" "}
-                  specialty
-                  {filtered.reduce(
-                    (acc, g) => acc + g.specialties.length,
-                    0,
-                  ) !== 1
-                    ? "ies"
-                    : "y"}{" "}
-                  found
-                </m.p>
-              )}
+              <m.p
+                variants={fadeInUpClean}
+                className="mt-3 text-center font-body text-sm text-muted"
+                aria-live="polite"
+              >
+                {query
+                  ? `${filteredSpecialties.length} ${filteredSpecialties.length === 1 ? "specialty" : "specialties"} found`
+                  : `${totalSpecialties} specialties · ${specialtyPages.length} billing pages`}
+              </m.p>
             </m.div>
 
-            <m.div
-              initial="hidden"
-              animate="visible"
-              variants={staggerContainer}
-              className="space-y-3"
-            >
-              {(query ? filtered : specialties).map((group) => (
-                <m.div
-                  key={group.letter}
-                  variants={fadeInUpClean}
-                  className="rounded-2xl border border-border bg-white overflow-hidden transition-all duration-300 hover:shadow-sm"
+            {/* Flat icon grid */}
+            {filteredSpecialties.length > 0 ? (
+              <m.ul
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-40px" }}
+                variants={staggerContainerFast}
+                className="mt-10 grid grid-cols-1 gap-x-6 gap-y-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+              >
+                {filteredSpecialties.map((spec) => {
+                  const Icon = getIcon(spec.icon);
+                  const specialtyPage = getSpecialtyPageByName(spec.name);
+                  const content = (
+                    <>
+                      <Icon
+                        className="h-8 w-8 shrink-0 text-muted/70 transition-colors duration-200 group-hover:text-primary"
+                        strokeWidth={1.5}
+                        aria-hidden="true"
+                      />
+                      <span className="min-w-0 flex-1 font-body text-sm font-medium leading-snug text-foreground transition-colors duration-200 group-hover:text-primary sm:text-base">
+                        {spec.name}
+                      </span>
+                    </>
+                  );
+
+                  if (specialtyPage) {
+                    return (
+                      <m.li key={spec.name} variants={scaleInLight}>
+                        <Link
+                          href={`/specialties/${specialtyPage.slug}`}
+                          className="group flex items-center gap-4 rounded-xl px-3 py-3 transition-colors duration-200 hover:bg-primary/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                        >
+                          {content}
+                        </Link>
+                      </m.li>
+                    );
+                  }
+
+                  return (
+                    <m.li key={spec.name} variants={scaleInLight}>
+                      <div className="group flex items-center gap-4 rounded-xl px-3 py-3 transition-colors duration-200 hover:bg-primary/5">
+                        {content}
+                      </div>
+                    </m.li>
+                  );
+                })}
+              </m.ul>
+            ) : (
+              <m.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] as const }}
+                className="mx-auto mt-10 max-w-xl rounded-3xl border border-border bg-white px-6 py-12 text-center"
+              >
+                <Search
+                  className="mx-auto h-8 w-8 text-muted/60"
+                  aria-hidden="true"
+                />
+                <p className="mt-4 font-body text-lg text-muted">
+                  No specialties found for &ldquo;{query}&rdquo;
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setQuery("")}
+                  className="mt-4 text-sm font-semibold text-primary transition-colors hover:text-accent"
                 >
-                  <button
-                    onClick={() => toggleGroup(group.letter)}
-                    className="flex w-full items-center justify-between px-6 py-4 text-left transition-colors duration-200 hover:bg-muted/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                    aria-expanded={expanded.includes(group.letter)}
-                    aria-controls={`group-${group.letter}`}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-primary to-accent shadow-sm">
-                        <span className="font-heading text-base font-bold text-white">
-                          {group.letter}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="font-heading text-sm font-semibold text-foreground">
-                          {group.specialties.length} Specialty
-                          {group.specialties.length !== 1 ? "ies" : "y"}
-                        </span>
-                        <div className="flex gap-1 mt-1">
-                          {Array.from({
-                            length: Math.min(group.specialties.length, 5),
-                          }).map((_, j) => (
-                            <div
-                              key={j}
-                              className="h-1.5 w-1.5 rounded-full bg-primary/30"
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    <m.div
-                      animate={{
-                        rotate: expanded.includes(group.letter) ? 180 : 0,
-                      }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <ChevronRight className="h-5 w-5 text-muted" />
-                    </m.div>
-                  </button>
-
-                  {expanded.includes(group.letter) && (
-                    <m.div
-                      id={`group-${group.letter}`}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{
-                        duration: 0.3,
-                        ease: [0.16, 1, 0.3, 1] as const,
-                      }}
-                      className="overflow-hidden"
-                    >
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 px-6 pb-5 pt-2 border-t border-border">
-                        {group.specialties.map((spec) => {
-                          const specialtyPage = getSpecialtyPageByName(
-                            spec.name,
-                          );
-
-                          if (specialtyPage) {
-                            return (
-                              <Link
-                                key={spec.name}
-                                href={`/specialties/${specialtyPage.slug}`}
-                                className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors duration-200 hover:bg-primary/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                              >
-                                <Stethoscope className="h-3.5 w-3.5 text-primary/50 shrink-0" />
-                                <span className="font-body text-sm text-muted">
-                                  {spec.name}
-                                </span>
-                              </Link>
-                            );
-                          }
-
-                          return (
-                            <div
-                              key={spec.name}
-                              className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors duration-200 hover:bg-primary/5"
-                            >
-                              <Stethoscope className="h-3.5 w-3.5 text-primary/50 shrink-0" />
-                              <span className="font-body text-sm text-muted">
-                                {spec.name}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </m.div>
-                  )}
-                </m.div>
-              ))}
-
-              {filtered.length === 0 && (
-                <m.div variants={fadeInUpClean} className="text-center py-8">
-                  <p className="font-body text-lg text-muted">
-                    No specialties found for &ldquo;{query}&rdquo;
-                  </p>
-                  <button
-                    onClick={() => setQuery("")}
-                    className="mt-4 text-sm font-semibold text-primary hover:text-accent transition-colors"
-                  >
-                    Clear search
-                  </button>
-                </m.div>
-              )}
-            </m.div>
+                  Clear search
+                </button>
+              </m.div>
+            )}
           </div>
         </section>
 
         {/* CTA */}
-        <section className="section-standard bg-background-subtle overflow-hidden">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+        <section className="section-standard overflow-hidden bg-background-subtle">
+          <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
             <m.div
               initial="hidden"
               whileInView="visible"
@@ -316,7 +366,7 @@ export default function SpecialtiesPage() {
             >
               <m.span
                 variants={fadeInUpClean}
-                className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-primary mb-3"
+                className="mb-3 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-primary"
               >
                 <Sparkles className="h-3.5 w-3.5" />
                 Not Listed?
@@ -329,19 +379,22 @@ export default function SpecialtiesPage() {
               </m.h2>
               <m.p
                 variants={fadeInUpClean}
-                className="mt-4 font-body text-base text-muted sm:text-lg max-w-xl mx-auto"
+                className="mx-auto mt-4 max-w-xl font-body text-base text-muted sm:text-lg"
               >
                 We may still support your practice type even if it is not yet a
                 featured landing page. Contact us to talk through your specialty
                 and billing workflow.
               </m.p>
               <m.div
-                variants={fadeInUpClean}
-                className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
+                variants={scaleInLight}
+                className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row"
               >
                 <CtaLink href="/contact">
                   Contact Us
                   <ArrowRight className="h-4 w-4" />
+                </CtaLink>
+                <CtaLink href="/services" variant="outline">
+                  View all services
                 </CtaLink>
               </m.div>
             </m.div>

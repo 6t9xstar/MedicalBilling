@@ -81,7 +81,7 @@ export default function SpecialtyStrip() {
           className="mt-10 flex flex-wrap items-center justify-between gap-4"
         >
           <p className="font-body text-sm text-muted">
-            52 specialty billing pages across the Apex
+            {specialtyPages.length} specialty billing pages across the Apex
             library.
           </p>
           <Link

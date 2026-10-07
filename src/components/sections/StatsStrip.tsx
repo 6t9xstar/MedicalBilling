@@ -8,21 +8,23 @@ import {
   staggerItem,
   usePrefersReducedMotion,
 } from "@/lib/animations";
+import { services } from "@/data/services";
+import { specialtyPages } from "@/data/specialtyPages";
 
 const items = [
   {
     icon: FileStack,
-    value: "22",
+    value: String(services.length),
     label: "Core services",
     description:
       "Billing, denials, AR, coding, enrollment, and front-end workflow support.",
   },
   {
     icon: Stethoscope,
-    value: "52",
+    value: String(specialtyPages.length),
     label: "Specialty pages",
     description:
-      "Initial specialty landing pages aligned with real practice workflows.",
+      "Specialty landing pages aligned with real practice workflows.",
   },
   {
     icon: BookOpen,

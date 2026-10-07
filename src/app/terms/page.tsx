@@ -73,7 +73,7 @@ const content: Record<string, string[]> = {
   ],
   contact: [
     `If you have questions about these Terms of Service, please contact us at ${SITE.email} or ${SITE.phone}.`,
-    `Business mailing address: ${SITE.address}`,
+    `Office address: ${SITE.address}`,
   ],
 };
 

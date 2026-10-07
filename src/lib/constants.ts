@@ -8,7 +8,18 @@ export const SITE = {
   phoneDisplay: "(908) 488-9245",
   phoneRaw: "+19084889245",
   areaServed: "United States",
-  address: "Business mailing address available upon request",
+  address: "1276 Lincoln Hwy, Colonia, NJ 07067",
+  addressParts: {
+    street: "1276 Lincoln Hwy",
+    city: "Colonia",
+    state: "NJ",
+    stateName: "New Jersey",
+    zip: "07067",
+  },
+  mapsUrl: "https://maps.app.goo.gl/rBTH5RHeeKgzh7Yz8",
+  mapsEmbedUrl:
+    "https://www.google.com/maps/embed?origin=mfe&pb=!1m2!2m1!1sApex+Precision+Billing+Inc,+1276+Lincoln+Hwy,+Colonia,+NJ+07067",
+  geo: { lat: 40.5925926, lng: -74.2937012 },
   social: {
     linkedin: "https://www.linkedin.com/company/apex-precision-billing/",
     instagram: "https://www.instagram.com/apexprecisionbilling",

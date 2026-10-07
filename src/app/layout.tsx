@@ -1,24 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Poppins, Inter } from "next/font/google";
 import { LazyMotion, domMax } from "framer-motion";
 import SiteExperience from "@/components/widgets/SiteExperience";
 import { SITE } from "@/lib/constants";
 import { buildLocalBusinessSchema, buildOrganizationSchema, buildWebsiteSchema } from "@/lib/schema";
 import "./globals.css";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-heading",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-body",
-  display: "swap",
-});
 
 const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION;
 
@@ -135,8 +120,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${poppins.variable} ${inter.variable}`}>
-      <head></head>
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://unpkg.com" />
+        <link rel="preconnect" href="https://unpkg.com" crossOrigin="anonymous" />
+      </head>
       <body className="min-h-screen bg-background text-foreground font-body antialiased selection:bg-primary selection:text-white">
         <a
           href="#main-content"

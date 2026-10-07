@@ -15,6 +15,7 @@ import { getRelatedServices } from "@/data/services";
 import { getRelatedSpecialties } from "@/data/specialtyPages";
 import { fadeInUpClean, staggerContainer } from "@/lib/animations";
 import { getIcon } from "@/lib/icons";
+import { media } from "@/lib/media";
 import {
   buildArticleSchema,
   buildBreadcrumbList,
@@ -65,7 +66,7 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
         <section className="relative flex min-h-[55dvh] items-center overflow-hidden">
           <div className="absolute inset-0">
             <Image
-              src={service.image || "/images/billing-hero.webp"}
+                  src={service.image || media("/images/billing-hero.webp")}
               alt=""
               fill
               className="object-cover"
@@ -73,7 +74,7 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
               priority
               aria-hidden="true"
             />
-            <div className="absolute inset-0 bg-linear-to-r from-primary-dark/95 via-primary/85 to-primary/70" />
+            <div className="absolute inset-0 bg-linear-to-r from-primary-dark/45 via-primary/40 to-primary/35" />
           </div>
           <div className="absolute -bottom-20 right-1/3 h-64 w-64 rounded-full bg-white/4 blur-[80px]" />
           <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-20 w-full">
@@ -99,7 +100,7 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
                   Core Service
                 </span>
               </div>
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight max-w-3xl">
+              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight max-w-3xl [text-shadow:0_2px_14px_rgba(8,48,111,0.5)]">
                 {service.title}
               </h1>
               <p className="mt-4 font-body text-lg text-white/85 max-w-3xl leading-relaxed">
@@ -219,7 +220,7 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
                 <article className="rounded-2xl border border-border bg-white p-7 shadow-sm">
                   <div className="relative overflow-hidden rounded-2xl mb-5">
                     <Image
-                      src={service.image || "/images/claim.webp"}
+                      src={service.image || media("/images/claim.webp")}
                       alt={service.title}
                       width={420}
                       height={280}

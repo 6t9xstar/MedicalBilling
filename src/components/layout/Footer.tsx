@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { media } from "@/lib/media";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { m } from "framer-motion";
@@ -46,7 +47,7 @@ const socialIcons: Record<SocialKey, ReactNode> = {
   ),
   instagram: (
     <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
-      <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5a4.25 4.25 0 0 0 4.25 4.25h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5a4.25 4.25 0 0 0-4.25-4.25h-8.5Zm8.88 1.62a1.13 1.13 0 1 1 0 2.26 1.13 1.13 0 0 1 0-2.26ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.5A3.5 3.5 1 0 0 12 15.5 3.5 3.5 0 0 0 12 8.5Z" />
+      <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5a4.25 4.25 0 0 0 4.25 4.25h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5a4.25 4.25 0 0 0-4.25-4.25h-8.5Zm8.88 1.62a1.13 1.13 0 1 1 0 2.26 1.13 1.13 0 0 1 0-2.26ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5Z" />
     </svg>
   ),
   facebook: (
@@ -67,6 +68,14 @@ const trustItems = [
   { icon: BookOpen, value: "Practical", label: "Guides & references" },
 ];
 
+const gridTextureStyle: React.CSSProperties = {
+  backgroundImage:
+    "linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px)",
+  backgroundSize: "44px 44px",
+  maskImage: "linear-gradient(to bottom, black, transparent 88%)",
+  WebkitMaskImage: "linear-gradient(to bottom, black, transparent 88%)",
+};
+
 function scrollToTop() {
   if (typeof window === "undefined") return;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -83,7 +92,7 @@ function FooterLinkGroup({
 }) {
   return (
     <div>
-      <h3 className="mb-5 font-heading text-xs font-bold uppercase text-primary-dark">
+      <h3 className="mb-5 font-heading text-xs font-bold uppercase tracking-wider text-accent-light">
         {title}
       </h3>
       <ul className="space-y-2.5">
@@ -91,9 +100,9 @@ function FooterLinkGroup({
           <li key={link.href}>
             <Link
               href={link.href}
-              className="group inline-flex items-center gap-1.5 font-body text-sm text-muted transition-all duration-200 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded"
+              className="group inline-flex items-center gap-1.5 rounded font-body text-sm text-white/70 transition-all duration-200 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light"
             >
-              <span className="h-0.5 w-0 rounded-full bg-accent transition-all duration-200 group-hover:w-2" />
+              <span className="h-0.5 w-0 rounded-full bg-accent-light transition-all duration-200 group-hover:w-2" />
               {link.label}
             </Link>
           </li>
@@ -106,19 +115,31 @@ function FooterLinkGroup({
 export default function Footer() {
   return (
     <footer
-      className="relative overflow-hidden border-t border-border bg-white"
+      className="gradient-dark relative overflow-hidden"
       aria-labelledby="footer-heading"
     >
       <h2 id="footer-heading" className="sr-only">
         Site footer
       </h2>
 
+      {/* Top accent hairline */}
       <div
-        className="blueprint-grid absolute inset-0 opacity-70"
+        className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/70 to-transparent"
+        aria-hidden="true"
+      />
+      {/* Grid texture */}
+      <div
+        className="absolute inset-0 opacity-90"
+        style={gridTextureStyle}
+        aria-hidden="true"
+      />
+      {/* Glow orbs */}
+      <div
+        className="absolute -top-24 -left-20 h-72 w-72 rounded-full bg-accent/15 blur-[120px]"
         aria-hidden="true"
       />
       <div
-        className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-background-subtle to-transparent"
+        className="absolute -bottom-32 right-10 h-80 w-80 rounded-full bg-primary/30 blur-[140px]"
         aria-hidden="true"
       />
 
@@ -129,14 +150,18 @@ export default function Footer() {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={staggerContainer}
-          className="premium-panel relative mb-10 overflow-hidden rounded-2xl p-8 sm:p-10"
+          className="relative mb-12 overflow-hidden rounded-3xl border border-white/15 bg-white/8 p-8 backdrop-blur-xl sm:p-10"
         >
+          <div
+            className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent/20 blur-[80px]"
+            aria-hidden="true"
+          />
           <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
             <m.div variants={fadeInUpClean} className="max-w-xl">
-              <h3 className="mb-2 font-heading text-xl font-bold text-foreground">
+              <h3 className="mb-2 font-heading text-xl font-bold text-white">
                 Start with a clearer billing conversation
               </h3>
-              <p className="font-body text-sm text-muted">
+              <p className="font-body text-sm text-white/70">
                 Request an audit, schedule a consultation, or contact Apex
                 directly to discuss your workflow priorities.
               </p>
@@ -147,14 +172,14 @@ export default function Footer() {
             >
               <Link
                 href="/free-billing-audit"
-                className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-all duration-300 hover:bg-accent hover:shadow-xl active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                className="inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-primary to-accent px-6 py-3 text-sm font-bold text-white shadow-lg shadow-black/20 transition-all duration-300 hover:brightness-110 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               >
                 Free Billing Audit
                 <ChevronRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/schedule-consultation"
-                className="inline-flex items-center gap-2 rounded-xl border border-primary/15 bg-white px-6 py-3 text-sm font-bold text-primary transition-all duration-300 hover:bg-primary/5 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/30 px-6 py-3 text-sm font-bold text-white transition-all duration-300 hover:bg-white hover:text-primary-dark active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               >
                 Schedule Consultation
               </Link>
@@ -175,36 +200,40 @@ export default function Footer() {
             <Link
               href="/"
               aria-label="Apex Precision Billing — Home"
-              className="group mb-6 block rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+              className="group mb-5 block w-fit rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-light"
             >
               <Image
-                src="/images/navbar-logo.png"
+                src={media("/images/footer-logo.png")}
                 alt="Apex Precision Billing Inc"
-                width={260}
-                height={44}
-                sizes="(min-width: 1280px) 220px, (min-width: 1024px) 240px, (min-width: 640px) 260px, 200px"
-                className="h-auto w-auto"
+                width={891}
+                height={349}
+                sizes="(min-width: 1280px) 150px, (min-width: 640px) 140px, 130px"
+                className="h-auto w-32 brightness-100 transition-all duration-300 group-hover:brightness-110 sm:w-36"
               />
             </Link>
 
-            <p className="mb-6 max-w-sm font-body text-sm leading-relaxed text-muted">
-              Apex Precision Billing is rebuilding its website around
-              specialty-aware service pages, stronger educational resources, and
-              clearer conversion paths for healthcare practices.
+            <p className="mb-1 font-heading text-sm font-semibold text-accent-light">
+              {SITE.tagline}
+            </p>
+
+            <p className="mb-6 max-w-sm font-body text-sm leading-relaxed text-white/70">
+              Specialty-aware medical billing, coding, and revenue cycle
+              support that helps physician practices collect faster, reduce
+              denials, and stay focused on patients.
             </p>
 
             <div className="mb-6 flex flex-wrap gap-3">
               {trustItems.map((item) => (
                 <div
                   key={item.label}
-                  className="flex items-center gap-2 rounded-lg border border-primary/10 bg-primary/5 px-3 py-2"
+                  className="flex items-center gap-2 rounded-lg border border-white/15 bg-white/8 px-3 py-2"
                 >
-                  <item.icon className="h-3.5 w-3.5 text-primary" />
+                  <item.icon className="h-3.5 w-3.5 text-accent-light" />
                   <div>
-                    <span className="font-heading text-xs font-bold text-foreground">
+                    <span className="font-heading text-xs font-bold text-white">
                       {item.value}
                     </span>
-                    <span className="ml-1 font-body text-[10px] text-muted">
+                    <span className="ml-1 font-body text-[10px] text-white/60">
                       {item.label}
                     </span>
                   </div>
@@ -225,7 +254,7 @@ export default function Footer() {
                     aria-label={`Apex Precision Billing on ${social.label} (opens in a new tab)`}
                     whileHover={{ y: -3, scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    className="flex h-10 w-10 items-center justify-center rounded-xl border border-primary/10 bg-primary/5 text-primary transition-all duration-200 hover:bg-primary hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/8 text-white/80 transition-all duration-200 hover:bg-white hover:text-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-light"
                   >
                     {socialIcons[social.key]}
                   </m.a>
@@ -238,10 +267,10 @@ export default function Footer() {
                 <li>
                   <a
                     href={`mailto:${SITE.email}`}
-                    className="group flex items-center gap-3 font-body text-sm text-muted transition-all duration-200 hover:text-primary"
+                    className="group flex items-center gap-3 font-body text-sm text-white/70 transition-all duration-200 hover:text-white"
                   >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/5 transition-colors group-hover:bg-primary/10">
-                      <Mail className="h-4 w-4 text-primary" />
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/8 transition-colors group-hover:bg-white/15">
+                      <Mail className="h-4 w-4 text-accent-light" />
                     </span>
                     <span className="break-all">{SITE.email}</span>
                   </a>
@@ -249,19 +278,26 @@ export default function Footer() {
                 <li>
                   <a
                     href={`tel:${SITE.phoneRaw}`}
-                    className="group flex items-center gap-3 font-body text-sm text-muted transition-all duration-200 hover:text-primary"
+                    className="group flex items-center gap-3 font-body text-sm text-white/70 transition-all duration-200 hover:text-white"
                   >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/5 transition-colors group-hover:bg-primary/10">
-                      <Phone className="h-4 w-4 text-primary" />
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/8 transition-colors group-hover:bg-white/15">
+                      <Phone className="h-4 w-4 text-accent-light" />
                     </span>
                     <span>{SITE.phone}</span>
                   </a>
                 </li>
-                <li className="flex items-center gap-3 font-body text-sm text-muted">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/5">
-                    <MapPin className="h-4 w-4 text-primary" />
-                  </span>
-                  <span>Serving physician practices across the United States</span>
+                <li>
+                  <a
+                    href={SITE.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-3 font-body text-sm text-white/70 transition-all duration-200 hover:text-white"
+                  >
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/8 transition-colors group-hover:bg-white/15">
+                      <MapPin className="h-4 w-4 text-accent-light" />
+                    </span>
+                    <span>{SITE.address}</span>
+                  </a>
                 </li>
               </ul>
             </address>
@@ -285,9 +321,9 @@ export default function Footer() {
         </m.div>
 
         {/* Bottom bar */}
-        <div className="mt-16 border-t border-border py-6">
+        <div className="mt-16 border-t border-white/10 py-6">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <p className="font-body text-xs text-muted">
+            <p className="font-body text-xs text-white/50">
               &copy; {CURRENT_YEAR} {SITE.name}. All rights reserved.
             </p>
 
@@ -296,12 +332,12 @@ export default function Footer() {
                 type="button"
                 onClick={scrollToTop}
                 aria-label="Scroll to top"
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/10 bg-primary/5 text-primary transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary hover:text-white active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 bg-white/8 text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:text-primary-dark active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-light"
               >
                 <ArrowUp className="h-4 w-4" />
               </button>
 
-              <span aria-hidden="true" className="text-border">
+              <span aria-hidden="true" className="text-white/20">
                 |
               </span>
 
@@ -315,13 +351,13 @@ export default function Footer() {
                     className="flex items-center gap-3 whitespace-nowrap"
                   >
                     {index > 0 && (
-                      <span aria-hidden="true" className="text-border">
+                      <span aria-hidden="true" className="text-white/20">
                         &middot;
                       </span>
                     )}
                     <Link
                       href={link.href}
-                      className="font-body text-xs text-muted transition-colors duration-200 hover:text-primary"
+                      className="font-body text-xs text-white/50 transition-colors duration-200 hover:text-white"
                     >
                       {link.label}
                     </Link>

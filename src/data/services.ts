@@ -1,3 +1,5 @@
+import { media } from "@/lib/media";
+
 export interface ServiceFaq {
   question: string;
   answer: string;
@@ -70,7 +72,7 @@ export const services: Service[] = [
       "payment-posting",
     ],
     icon: "FileText",
-    image: "/images/claim.webp",
+    image: media("/images/claim.webp"),
   },
   {
     slug: "revenue-cycle-management",
@@ -122,7 +124,7 @@ export const services: Service[] = [
       "payment-posting",
     ],
     icon: "TrendingUp",
-    image: "/images/rcm.jpg",
+    image: media("/images/rcm.jpg"),
   },
   {
     slug: "medical-coding",
@@ -170,7 +172,7 @@ export const services: Service[] = [
     ],
     relatedSlugs: ["charge-entry", "denial-management", "medical-billing"],
     icon: "CheckCircle",
-    image: "/images/claim.webp",
+    image: media("/images/claim.webp"),
   },
   {
     slug: "accounts-receivable-recovery",
@@ -218,7 +220,7 @@ export const services: Service[] = [
     ],
     relatedSlugs: ["denial-management", "medical-billing", "payment-posting"],
     icon: "RefreshCw",
-    image: "/images/audit.jpg",
+    image: media("/images/audit.jpg"),
   },
   {
     slug: "denial-management",
@@ -271,7 +273,7 @@ export const services: Service[] = [
       "eligibility-verification",
     ],
     icon: "AlertTriangle",
-    image: "/images/billing-hero.webp",
+    image: media("/images/billing-hero.webp"),
   },
   {
     slug: "credentialing-enrollment",
@@ -323,7 +325,7 @@ export const services: Service[] = [
       "hipaa-compliance",
     ],
     icon: "UserCheck",
-    image: "/images/credentialing.png",
+    image: media("/images/credentialing.webp"),
   },
   {
     slug: "eligibility-verification",
@@ -375,7 +377,7 @@ export const services: Service[] = [
       "denial-management",
     ],
     icon: "Search",
-    image: "/images/claim.webp",
+    image: media("/images/claim.webp"),
   },
   {
     slug: "prior-authorization",
@@ -428,7 +430,7 @@ export const services: Service[] = [
       "denial-management",
     ],
     icon: "Clock",
-    image: "/images/billing-hero.webp",
+    image: media("/images/billing-hero.webp"),
   },
   {
     slug: "charge-entry",
@@ -476,7 +478,7 @@ export const services: Service[] = [
     ],
     relatedSlugs: ["medical-coding", "medical-billing", "payment-posting"],
     icon: "BarChart3",
-    image: "/images/claim.webp",
+    image: media("/images/claim.webp"),
   },
   {
     slug: "payment-posting",
@@ -528,7 +530,7 @@ export const services: Service[] = [
       "revenue-cycle-management",
     ],
     icon: "Activity",
-    image: "/images/rcm.jpg",
+    image: media("/images/rcm.jpg"),
   },
   {
     slug: "provider-enrollment",
@@ -580,7 +582,7 @@ export const services: Service[] = [
       "revenue-cycle-management",
     ],
     icon: "Users",
-    image: "/images/credentialing.png",
+    image: media("/images/credentialing.webp"),
   },
   {
     slug: "hipaa-compliance",
@@ -632,7 +634,7 @@ export const services: Service[] = [
       "provider-enrollment",
     ],
     icon: "ShieldCheck",
-    image: "/images/billing-hero.webp",
+    image: media("/images/billing-hero.webp"),
   },
   {
     slug: "insurance-verification-services",
@@ -685,7 +687,7 @@ export const services: Service[] = [
       "medical-claims-submission",
     ],
     icon: "Search",
-    image: "/images/billing-hero.webp",
+    image: media("/images/billing-hero.webp"),
   },
   {
     slug: "out-of-network-billing",
@@ -737,7 +739,7 @@ export const services: Service[] = [
       "appeals-reconsiderations",
     ],
     icon: "Globe",
-    image: "/images/claim.webp",
+    image: media("/images/claim.webp"),
   },
   {
     slug: "medical-claims-submission",
@@ -789,7 +791,7 @@ export const services: Service[] = [
       "claims-follow-up",
     ],
     icon: "FileText",
-    image: "/images/claim.webp",
+    image: media("/images/claim.webp"),
   },
   {
     slug: "claims-follow-up",
@@ -841,7 +843,7 @@ export const services: Service[] = [
       "denial-management",
     ],
     icon: "RefreshCw",
-    image: "/images/audit.jpg",
+    image: media("/images/audit.jpg"),
   },
   {
     slug: "appeals-reconsiderations",
@@ -893,7 +895,7 @@ export const services: Service[] = [
       "out-of-network-billing",
     ],
     icon: "AlertTriangle",
-    image: "/images/claim.webp",
+    image: media("/images/claim.webp"),
   },
   {
     slug: "patient-billing-services",
@@ -945,7 +947,7 @@ export const services: Service[] = [
       "revenue-cycle-management",
     ],
     icon: "Users",
-    image: "/images/billing-hero.webp",
+    image: media("/images/billing-hero.webp"),
   },
   {
     slug: "revenue-analytics-reporting",
@@ -997,7 +999,7 @@ export const services: Service[] = [
       "payment-posting",
     ],
     icon: "BarChart3",
-    image: "/images/rcm.jpg",
+    image: media("/images/rcm.jpg"),
   },
   {
     slug: "practice-management-consulting",
@@ -1049,7 +1051,7 @@ export const services: Service[] = [
       "medical-billing-outsourcing",
     ],
     icon: "Target",
-    image: "/images/audit.jpg",
+    image: media("/images/audit.jpg"),
   },
   {
     slug: "virtual-medical-billing-team",
@@ -1101,7 +1103,7 @@ export const services: Service[] = [
       "practice-management-consulting",
     ],
     icon: "Monitor",
-    image: "/images/billing-hero.webp",
+    image: media("/images/billing-hero.webp"),
   },
   {
     slug: "medical-billing-outsourcing",
@@ -1154,7 +1156,7 @@ export const services: Service[] = [
       "revenue-cycle-management",
     ],
     icon: "Building2",
-    image: "/images/rcm.jpg",
+    image: media("/images/rcm.jpg"),
   },
 ];
 

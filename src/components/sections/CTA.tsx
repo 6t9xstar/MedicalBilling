@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { media } from "@/lib/media";
 import Image from "next/image";
 import Link from "next/link";
 import { m, useInView } from "framer-motion";
@@ -44,7 +45,7 @@ export default function CTA() {
             />
             <div className="absolute inset-[8%] overflow-hidden rounded-full border-4 border-white/25 shadow-2xl shadow-black/20">
               <Image
-                src="/images/doctor-circle.jpg"
+                src={media("/images/doctor-circle.jpg")}
                 alt="Healthcare professional portrait for Apex Precision Billing"
                 fill
                 sizes="176px"

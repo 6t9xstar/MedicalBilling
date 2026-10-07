@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { media } from "@/lib/media";
 import Image from "next/image";
 import CtaLink from "@/components/ui/CtaLink";
 import { m, useInView } from "framer-motion";
@@ -154,7 +155,7 @@ export default function AboutPreview() {
                 />
                 <div className="absolute inset-x-[10%] bottom-0 top-[4%]">
                   <Image
-                    src="/images/doctoranalysis.png"
+                    src={media("/images/doctoranalysis.webp")}
                     alt="Smiling healthcare professional representing Apex Precision Billing services"
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
